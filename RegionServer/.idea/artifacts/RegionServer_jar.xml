@@ -1,0 +1,28 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="RegionServer:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/RegionServer_jar</output-path>
+    <root id="archive" name="RegionServer.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="RegionServer" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../devtool/Maven/repository/log4j/log4j/1.2.17/log4j-1.2.17.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../devtool/Maven/repository/org/apache/zookeeper/zookeeper-jute/3.8.1/zookeeper-jute-3.8.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../devtool/Maven/repository/io/netty/netty-handler/4.1.86.Final/netty-handler-4.1.86.Final.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../devtool/Maven/repository/io/netty/netty-common/4.1.86.Final/netty-common-4.1.86.Final.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../devtool/Maven/repository/io/netty/netty-transport/4.1.86.Final/netty-transport-4.1.86.Final.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../devtool/Maven/repository/io/netty/netty-codec/4.1.86.Final/netty-codec-4.1.86.Final.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../devtool/Maven/repository/ch/qos/logback/logback-classic/1.2.10/logback-classic-1.2.10.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../devtool/Maven/repository/io/netty/netty-buffer/4.1.86.Final/netty-buffer-4.1.86.Final.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../devtool/Maven/repository/io/netty/netty-transport-classes-epoll/4.1.86.Final/netty-transport-classes-epoll-4.1.86.Final.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../devtool/Maven/repository/io/netty/netty-transport-native-unix-common/4.1.86.Final/netty-transport-native-unix-common-4.1.86.Final.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../devtool/Maven/repository/org/slf4j/slf4j-api/1.7.30/slf4j-api-1.7.30.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../devtool/Maven/repository/ch/qos/logback/logback-core/1.2.10/logback-core-1.2.10.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../devtool/Maven/repository/commons-io/commons-io/2.11.0/commons-io-2.11.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../devtool/Maven/repository/org/apache/zookeeper/zookeeper/3.8.1/zookeeper-3.8.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../devtool/Maven/repository/io/netty/netty-transport-native-epoll/4.1.86.Final/netty-transport-native-epoll-4.1.86.Final.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../devtool/Maven/repository/io/netty/netty-resolver/4.1.86.Final/netty-resolver-4.1.86.Final.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../devtool/Maven/repository/org/apache/yetus/audience-annotations/0.12.0/audience-annotations-0.12.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
