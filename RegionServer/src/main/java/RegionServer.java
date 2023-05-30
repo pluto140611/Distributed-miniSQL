@@ -3,9 +3,10 @@ import RegionManagers.RegionManager;
 import javax.swing.plaf.synth.Region;
 
 public class RegionServer {
-    public static void main (String[] args) {
+    public static void main (String[] args) throws Exception{
         RegionManager regionManager = new RegionManager();
-        System.out.print("hello");
+        regionManager.start();
+
 
     }
 }
