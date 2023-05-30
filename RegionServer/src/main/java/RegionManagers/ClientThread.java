@@ -70,7 +70,7 @@ public class ClientThread implements Runnable {
 
     public void sendToClient(String info) throws Exception {
 //        output.println("result: " + info);
-        bufferedWriter.write("result " + info);
+        bufferedWriter.write(info);
         bufferedWriter.newLine();
         bufferedWriter.flush();
     }

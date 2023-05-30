@@ -18,6 +18,6 @@ public class CacheManager {
     }
     public void setCache(String table, String server) {
         cache.put(table, server);
-        System.out.println("已将此表存入Cache：Table：" + table + " Port：" + table);
+//        System.out.println("已将此表存入Cache：Table：" + table + " Port：" + table);
     }
 }

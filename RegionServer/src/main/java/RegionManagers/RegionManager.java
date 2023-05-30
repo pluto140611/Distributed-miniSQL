@@ -16,10 +16,10 @@ public class RegionManager {
 
 
     public RegionManager() throws Exception{
+        API.initial();
         zkServiceManager = new ZkServiceManager();
         masterSocketManager = new MasterSocketManager();
         clientManager = new ClientManager(masterSocketManager);
-        API.initial();
         log.info("init success!");
     }
 

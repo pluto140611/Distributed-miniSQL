@@ -22,6 +22,8 @@ public class MasterSocketManager implements  Runnable{
     private Boolean isRunning = false;
     public final String master = "192.168.43.27";
     public final int port = 15552;
+    public final String table_catalog = "table_catalog";
+    public final String index_catalog = "index_catalog";
 
     public MasterSocketManager()throws IOException{
         this.socket = new Socket(master,port);
