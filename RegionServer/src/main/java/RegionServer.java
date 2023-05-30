@@ -7,6 +7,5 @@ public class RegionServer {
         RegionManager regionManager = new RegionManager();
         regionManager.start();
 
-
     }
 }

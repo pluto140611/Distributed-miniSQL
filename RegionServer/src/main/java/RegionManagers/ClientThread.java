@@ -42,7 +42,7 @@ public class ClientThread implements Runnable {
                     SocketFormat sql = JSON.parseObject(command, SocketFormat.class);
                     if (this.processCommand(sql.getContent(), this.socket.getInetAddress().toString())) {
                         SocketFormat regionLog = new SocketFormat("region",2, sql.getContent());
-                        masterSocketManager.sendToMaster(JSON.toJSONString(regionLog),2);
+                        masterSocketManager.sendToMaster(sql.getContent(), 2);
                     }
 
                 }

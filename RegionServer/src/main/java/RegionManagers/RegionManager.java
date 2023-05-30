@@ -25,6 +25,8 @@ public class RegionManager {
 
     public void start() {
         try{
+            Thread zkThread = new Thread(zkServiceManager);
+            zkThread.start();
 
             Thread mainThread = new Thread(clientManager);
             mainThread.start();

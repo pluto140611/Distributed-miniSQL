@@ -2,6 +2,7 @@ package RegionManagers;
 
 import com.alibaba.fastjson2.JSON;
 import lombok.extern.slf4j.Slf4j;
+import miniSQL.Interpreter;
 import utils.SocketFormat;
 
 import java.io.BufferedReader;
@@ -49,7 +50,24 @@ public class MasterSocketManager implements  Runnable{
                 if (command != null) {
                     log.info(command);
                     SocketFormat recoverCommand = JSON.parseObject(command,SocketFormat.class);
+                    if (recoverCommand.getType() == 2) {
+                        //进行容错容灾恢复
+                        String content = recoverCommand.getContent();
+                        String []commands = content.split("\\|");
+                        for(int i = 0; i < commands.length; i++) {
+                            Interpreter.interpret(commands[i]);
+                        }
 
+                    }
+                    else if(recoverCommand.getType() == 3) {
+                        //删除已经分配给其他region的表
+                        String content = recoverCommand.getContent();
+                        String []tables = content.split("\\|");
+                        for (int i = 0; i < tables.length; i++) {
+                            String tmpCommand = "drop table " + tables[i] + " ;";
+                            Interpreter.interpret(tmpCommand);
+                        }
+                    }
                 }
 
 
