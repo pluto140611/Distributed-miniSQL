@@ -15,7 +15,7 @@ import java.net.Socket;
 import java.nio.Buffer;
 
 @Slf4j
-public class MasterSocketManager implements  Runnable{
+public class MasterSocketManager implements Runnable {
 
     private Socket socket;
     private BufferedReader input = null;
@@ -26,61 +26,65 @@ public class MasterSocketManager implements  Runnable{
     public final String table_catalog = "table_catalog";
     public final String index_catalog = "index_catalog";
 
-    public MasterSocketManager()throws IOException{
-        this.socket = new Socket(master,port);
+    public MasterSocketManager() throws IOException {
+        this.socket = new Socket(master, port);
         input = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
-        output = new PrintWriter(this.socket.getOutputStream(),true);
+        output = new PrintWriter(this.socket.getOutputStream(), true);
         isRunning = true;
         String ipAddress = InetAddress.getLocalHost().getHostAddress();
 //        SocketFormat init = new SocketFormat("region",3,""); //通知主节点从节点上线
-        this.sendToMaster(ipAddress,3);
+        this.sendToMaster(ipAddress, 3);
     }
 
     public void sendToMaster(String msg, int type) {
 
-        SocketFormat socketMsg = new SocketFormat("region",type,msg);
+        SocketFormat socketMsg = new SocketFormat("region", type, msg);
         String sendMsg = JSON.toJSONString(socketMsg);
         output.println(sendMsg);
     }
+
     @Override
     public void run() {
-        try{
+        try {
             String command = null;
-            if(socket.isClosed() || socket.isInputShutdown() || socket.isOutputShutdown()){
+            if (socket.isClosed() || socket.isInputShutdown() || socket.isOutputShutdown()) {
                 log.info("connection with Master break");
             }
-            while(isRunning) {
+            while (isRunning) {
                 Thread.sleep(1000);
                 command = input.readLine();
                 if (command != null) {
                     log.info(command);
-                    SocketFormat recoverCommand = JSON.parseObject(command,SocketFormat.class);
+                    SocketFormat recoverCommand = JSON.parseObject(command, SocketFormat.class);
                     if (recoverCommand.getType() == 2) {
-                        //进行容错容灾恢复
+                        //进行副本存储
                         String content = recoverCommand.getContent();
-                        if(content!=""){
-                            String []commands = content.split("\\|");
-                            for(int i = 0; i < commands.length; i++) {
-                                Interpreter.interpret(commands[i]);
+                        if (content != "") {
+//                            String[] commands = content.split("\\|");
+//                            for (int i = 0; i < commands.length; i++) {
+//                                Interpreter.interpret(commands[i]);
+//                            }
+                            Interpreter.interpret(content);
+                        }
+
+                    } else if (recoverCommand.getType() == 3) {
+                        //上线后将其他副本恢复。
+                        String content = recoverCommand.getContent();
+                        if (content != null) {
+                            String[] tables = content.split("\\|");
+                            for (int i = 0; i < tables.length; i++) {
+//                            String tmpCommand = "drop table " + tables[i] + " ;";
+                                Interpreter.interpret(tables[i]);
                             }
                         }
 
-                    }
-                    else if(recoverCommand.getType() == 3) {
-                        //删除已经分配给其他region的表
-                        String content = recoverCommand.getContent();
-                        String []tables = content.split("\\|");
-                        for (int i = 0; i < tables.length; i++) {
-                            String tmpCommand = "drop table " + tables[i] + " ;";
-                            Interpreter.interpret(tmpCommand);
-                        }
                     }
                 }
 
 
             }
-        }catch (Exception e) {
-            log.error(e.getMessage(),e);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
         }
 
     }
