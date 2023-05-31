@@ -41,6 +41,7 @@ public class ZkServiceManager implements Runnable {
             }
 
 
+
             // 阻塞该线程，直到发生异常或者主动退出
             synchronized (this) {
                 wait();

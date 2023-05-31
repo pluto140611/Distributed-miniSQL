@@ -106,12 +106,14 @@ public class ClientManager {
                     break;
                 }
             }
-            executeCachedCommand(sql, table);
-        } else {
-            if (TRUE_VALUE.equals(commandInfo.get(CACHE_KEY))) {
-                executeCachedCommand(sql, table);
-            }
+
         }
+        executeCachedCommand(sql, table);
+//        else {
+//            if (TRUE_VALUE.equals(commandInfo.get(CACHE_KEY))) {
+//                executeCachedCommand(sql, table);
+//            }
+//        }
     }
 
     private void executeCachedCommand(String sql, String table) throws IOException, InterruptedException {
@@ -127,13 +129,18 @@ public class ClientManager {
                     break;
                 }
             }
-            connectToRegion(this.cacheManager.getCache(table), sql);
+            cache = this.cacheManager.getCache(table);
+
         } else {
             // 如果查到了端口号就直接在Interact_region中进行连接
 //            System.out.println(">>该表在客户端Cache中！\n>>其对应的服务器：" + cache);
-            log.info("This table is in IP: " + cache);
-            connectToRegion(cache, sql);
+            log.info("I known this table is in IP: " + cache);
+
         }
+//        if(regionManager.getRegion(cache) == null) {
+//
+//        }
+        connectToRegion(cache, sql);
     }
 
     public void connectToRegion(String ip, String sql) throws IOException, InterruptedException {

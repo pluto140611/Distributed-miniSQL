@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.Buffer;
@@ -30,11 +31,13 @@ public class MasterSocketManager implements  Runnable{
         input = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
         output = new PrintWriter(this.socket.getOutputStream(),true);
         isRunning = true;
+        String ipAddress = InetAddress.getLocalHost().getHostAddress();
 //        SocketFormat init = new SocketFormat("region",3,""); //通知主节点从节点上线
-        this.sendToMaster("",3);
+        this.sendToMaster(ipAddress,3);
     }
 
     public void sendToMaster(String msg, int type) {
+
         SocketFormat socketMsg = new SocketFormat("region",type,msg);
         String sendMsg = JSON.toJSONString(socketMsg);
         output.println(sendMsg);
@@ -55,9 +58,11 @@ public class MasterSocketManager implements  Runnable{
                     if (recoverCommand.getType() == 2) {
                         //进行容错容灾恢复
                         String content = recoverCommand.getContent();
-                        String []commands = content.split("\\|");
-                        for(int i = 0; i < commands.length; i++) {
-                            Interpreter.interpret(commands[i]);
+                        if(content!=""){
+                            String []commands = content.split("\\|");
+                            for(int i = 0; i < commands.length; i++) {
+                                Interpreter.interpret(commands[i]);
+                            }
                         }
 
                     }

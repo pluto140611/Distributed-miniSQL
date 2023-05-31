@@ -9,8 +9,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 @Slf4j
@@ -34,8 +36,11 @@ public class Interact_master implements Runnable {
         isRunning = true;
         if (socket != null) {
             log.info("Master connect success");
-            System.out.println("Master connect success");
+//            System.out.println("Master connect success");
         }
+        String ipAddress = InetAddress.getLocalHost().getHostAddress();
+        SocketFormat temp = new SocketFormat("client",4,ipAddress);
+        output.println(JSON.toJSONString(temp));
 //        connectToMaster();
     }
 
@@ -60,6 +65,11 @@ public class Interact_master implements Runnable {
                     if (socketFormat.getType() ==1 ) {
                         String [ ]contents = socketFormat.getContent().split("\\|");
                         clientManager.cacheManager.setCache(contents[1],contents[0]);
+                    }
+                    else if (socketFormat.getType()==4){
+                        String []contents = socketFormat.getContent().split("\\|");
+                        clientManager.cacheManager.setCache(contents[1],contents[0]);
+                        log.info("cache update success");
                     }
                 }
 
@@ -130,7 +140,7 @@ public class Interact_master implements Runnable {
 
 //    private void handleTableMessage(String message) throws Exception{
 //        String[] args = message.substring(7).split(" ");
-//        String sql = commandMap.get(args[0]);
+//        String sql = commandMap.get(args[0]);JDK虚拟机ip地址和无线局域网ip地址不同
 //        System.out.println(sql);
 //        if (sql != null) {
 //            int port = Integer.parseInt(args[1]);

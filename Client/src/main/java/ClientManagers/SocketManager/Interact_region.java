@@ -18,16 +18,18 @@ public class Interact_region implements Runnable {
     private PrintWriter output;
     private volatile boolean isRunning;
     private Thread infoListener;
+    private RegionManager regionManager;
 
     private static final int port = 15551;
 
-    public Interact_region(String ip) throws Exception {
+    public Interact_region(String ip, RegionManager regionManager) throws Exception {
         this.ip = ip;
 //        infoListener = new InfoListener();
         this.socket = new Socket(ip, this.port);
         this.input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         this.output = new PrintWriter(socket.getOutputStream(), true);
         this.isRunning = true;
+        this.regionManager = regionManager;
         log.info("connected with" + ip + " success!");
     }
 
@@ -58,7 +60,6 @@ public class Interact_region implements Runnable {
     public String receiveFromRegion() throws IOException {
         String line = "";
         if (socket.isClosed() || socket.isInputShutdown() || socket.isOutputShutdown()) {
-//            System.out.println(">>Socket连接已经关闭!");
             log.info("Socket connect with region break");
             return line;
         } else {
@@ -90,6 +91,9 @@ public class Interact_region implements Runnable {
         String line = "";
         try {
             while (isRunning) {
+                if(socket.isClosed() || socket.isInputShutdown() || socket.isOutputShutdown()) {
+                    this.regionManager.removeThread(this.ip);
+                }
                 Thread.sleep(1000);
 //                if (socket.isClosed() || socket.isInputShutdown() || socket.isOutputShutdown()) {
 //                    isRunning = false;
@@ -105,6 +109,7 @@ public class Interact_region implements Runnable {
                 }
             }
         } catch (Exception e) {
+            this.regionManager.removeThread(this.ip);
             log.error(e.getMessage(), e);
         }
 

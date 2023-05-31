@@ -8,6 +8,12 @@
   <name>Archetype - Client</name>
   <url>http://maven.apache.org</url>
 
+  <properties>
+    <maven.compiler.source>20</maven.compiler.source>
+    <maven.compiler.target>20</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>com.alibaba.fastjson2</groupId>

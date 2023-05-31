@@ -20,7 +20,9 @@ public class RegionManager {
     }
 
     public Thread getThread(String ip) {
-        return regionMap.get(ip);
+        if (regionMap.containsKey(ip))
+            return regionMap.get(ip);
+        return null;
     }
 
     public Interact_region getRegion(String ip) {
@@ -38,7 +40,7 @@ public class RegionManager {
 
     public Interact_region setThread(String ip) {
         try {
-            Interact_region newThread = new Interact_region(ip);
+            Interact_region newThread = new Interact_region(ip, this);
             Thread thread = new Thread(newThread);
             thread.start();
             this.regionMap.put(ip, thread);
@@ -50,6 +52,12 @@ public class RegionManager {
             log.error(e.getMessage(), e);
         }
         return null;
+    }
+
+    public void removeThread(String ip) {
+        if(regionHashMap.containsKey(ip)){
+            regionMap.remove(ip);
+        }
     }
 
 }
