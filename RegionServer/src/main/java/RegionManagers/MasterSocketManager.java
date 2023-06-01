@@ -70,7 +70,7 @@ public class MasterSocketManager implements Runnable {
                     } else if (recoverCommand.getType() == 3) {
                         //上线后将其他副本恢复。
                         String content = recoverCommand.getContent();
-                        if (content != null) {
+                        if (content != "") {
                             String[] tables = content.split("\\|");
                             for (int i = 0; i < tables.length; i++) {
 //                            String tmpCommand = "drop table " + tables[i] + " ;";
